@@ -1,0 +1,5 @@
+﻿file,mae_ms,rmse_ms,status
+phone_F1.wav,nan,nan,Khong tim duoc bien du doan
+phone_M1.wav,1530.0,2163.7467504308356,"MAE=1530.0 ms, RMSE=2163.7 ms"
+studio_F1.wav,5.0000000000001155,7.071067811865639,"MAE=5.0 ms, RMSE=7.1 ms"
+studio_M1.wav,10.000000000000009,14.142135623730963,"MAE=10.0 ms, RMSE=14.1 ms"
