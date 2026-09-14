@@ -1,6 +1,6 @@
 # Python env
 /gki/myenv/
-
+/speech_silence_final_source/myenv/
 # cache
 __pycache__/
 *.pyc

@@ -1,0 +1,15 @@
+{
+  "frame_ms": 50.0,
+  "W": 5.0,
+  "num_bins": 80,
+  "smooth_bins": 1,
+  "median_width": 1,
+  "training_wav_hashes": [
+    "4209a6ffe642f93b89554000fa7766135faf7c6cd97ce99b912b44af5e39db12",
+    "f6ec4c441948ea9e749ddfdf2ec88b5400261c2f7249c54baf42e00b485eab22",
+    "60deec10a9a1db91546503977892d17f34111d7090482b893dc46ebe09ec6fc5",
+    "7ad0e8baff2c69e65f680842a7cda33744358111f7662d9b6d17702b2077be78"
+  ],
+  "selection": "training: unmatched boundaries, balanced frame error, matched MAE",
+  "min_silence_ms": 300.0
+}
