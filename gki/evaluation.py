@@ -82,11 +82,16 @@ def analyze_file(wav_path, threshold):
             "mae": mae, "rmse": rmse, "snr_db": snr_db, "message": message}
 
 
-def plot_result(wav_path, threshold, result):
-    """Ve ket qua. Dau vao: WAV, nguong, dictionary. Tra ve: Matplotlib figure."""
+def plot_result(wav_path, threshold, result, container=None, show_legend=True):
+    """Ve day du ket qua mot WAV, doc lap hoac trong subfigure tong hop."""
     signal_time = np.arange(result["x"].size) / result["fs"]
-    fig, axes = plt.subplots(3, 1, num=wav_path.stem, figsize=(9, 7), sharex=True,
-                             gridspec_kw={"height_ratios": [2.0, 1.25, 0.8]})
+    if container is None:
+        fig, axes = plt.subplots(3, 1, num=wav_path.stem, figsize=(9, 7), sharex=True,
+                                 gridspec_kw={"height_ratios": [2.0, 1.25, 0.8]})
+    else:
+        fig = container
+        axes = container.subplots(3, 1, sharex=True,
+                                  gridspec_kw={"height_ratios": [2.0, 1.25, 0.8]})
     axes[0].plot(signal_time, result["x"], color="0.25", linewidth=0.7,
                  label="Waveform")
     axes[0].set(title="1. Tin hieu dau vao va cac bien", xlabel="Thoi gian (s)",
@@ -109,7 +114,8 @@ def plot_result(wav_path, threshold, result):
     axes[1].set(title="2. Ket qua trung gian: dac trung log(MA) va nguong",
                 xlabel="Thoi gian (s)", ylabel="log(MA)")
     axes[1].grid(alpha=0.2)
-    axes[1].legend(loc="upper right", fontsize=8)
+    if show_legend:
+        axes[1].legend(loc="upper right", fontsize=8)
 
     # Subplot thu ba tach rieng ket qua cuoi cung de de so sanh voi nhan LAB.
     axes[2].step(times, result["labels"], where="mid", color="blue",
@@ -122,7 +128,8 @@ def plot_result(wav_path, threshold, result):
     axes[2].set_yticklabels(["Silence", "Speech"])
     axes[2].set_ylim(-0.15, 1.15)
     axes[2].grid(alpha=0.2)
-    axes[2].legend(loc="upper right", fontsize=8)
+    if show_legend:
+        axes[2].legend(loc="upper right", fontsize=8)
 
     # Ve bien du doan va ground-truth tren waveform de danh gia truc quan.
     for axis in (axes[0],):
@@ -134,11 +141,13 @@ def plot_result(wav_path, threshold, result):
                          label="Bien chuan" if index == 0 else None)
         waveform_lines, waveform_names = axis.get_legend_handles_labels()
         feature_lines, feature_names = feature_axis.get_legend_handles_labels()
-        axis.legend(waveform_lines + feature_lines, waveform_names + feature_names,
-                    loc="upper right", fontsize=8)
+        if show_legend:
+            axis.legend(waveform_lines + feature_lines, waveform_names + feature_names,
+                        loc="upper right", fontsize=8)
     snr_text = "SNR=N/A" if np.isnan(result["snr_db"]) else f"SNR={result['snr_db']:.1f} dB"
     fig.suptitle(f"{wav_path.name} | {result['message']} | {snr_text}")
-    fig.tight_layout()
+    if container is None:
+        fig.tight_layout()
     return fig
 
 
